@@ -1,0 +1,39 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "asmodeoweb-4931e",
+          "appId": "1:465388736606:android:d2db1af874025e2d83e4cf",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "asmodeoweb-4931e",
+          "configurations": {
+            "android": "1:465388736606:android:d2db1af874025e2d83e4cf",
+            "ios": "1:465388736606:ios:7e04a55b64c7efbf83e4cf",
+            "macos": "1:465388736606:ios:7e04a55b64c7efbf83e4cf",
+            "web": "1:465388736606:web:c553ffff2885af0883e4cf",
+            "windows": "1:465388736606:web:a546016b3de0f10483e4cf"
+          }
+        }
+      }
+    }
+  },
+  "hosting": {
+    "public": "build/web",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

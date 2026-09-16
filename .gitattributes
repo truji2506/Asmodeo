@@ -1,0 +1,16 @@
+# Auto-detectar archivos de texto y normalizar saltos de línea a LF (Linux/Mac)
+# Esto es fundamental al trabajar en Windows pero desplegar en Firebase Hosting (entornos Linux)
+* text=auto
+
+# Asegurar que los archivos de código tengan saltos de línea LF
+*.dart text eol=lf
+*.yaml text eol=lf
+*.json text eol=lf
+*.html text eol=lf
+*.md text eol=lf
+*.js text eol=lf
+*.css text eol=lf
+
+# Archivos específicos de Windows deben usar CRLF
+*.bat text eol=crlf
+*.cmd text eol=crlf

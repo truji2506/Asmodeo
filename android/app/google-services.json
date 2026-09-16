@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "465388736606",
+    "project_id": "asmodeoweb-4931e",
+    "storage_bucket": "asmodeoweb-4931e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:465388736606:android:d2db1af874025e2d83e4cf",
+        "android_client_info": {
+          "package_name": "com.example.asmodeo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_8cvwuCJ-wi4lkNkuHFrQFNNU-xypcqI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
