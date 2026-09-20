@@ -58,7 +58,7 @@ class _TacticalResourcesChartState extends State<TacticalResourcesChart> {
                         const Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text('100%', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.black87)),
+                            Text('100%', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 36, color: Colors.black87)),
                             Text('Total', style: TextStyle(color: Colors.grey, fontSize: 12)),
                           ],
                         ),
@@ -79,7 +79,7 @@ class _TacticalResourcesChartState extends State<TacticalResourcesChart> {
                             ),
                             borderData: FlBorderData(show: false),
                             sectionsSpace: 2,
-                            centerSpaceRadius: 40,
+                            centerSpaceRadius: 75,
                             sections: showingSections(),
                           ),
                         ),
@@ -115,7 +115,7 @@ class _TacticalResourcesChartState extends State<TacticalResourcesChart> {
     return List.generate(3, (i) {
       final isTouched = i == touchedIndex;
       final fontSize = isTouched ? 16.0 : 0.0;
-      final radius = isTouched ? 35.0 : 25.0;
+      final radius = isTouched ? 50.0 : 40.0;
       const textStyle = TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white);
 
       switch (i) {

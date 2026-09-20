@@ -44,7 +44,7 @@ class ExtractionTimeChart extends StatelessWidget {
               child: BarChart(
                 BarChartData(
                   alignment: BarChartAlignment.spaceAround,
-                  maxY: 34,
+                  maxY: 36, // Aumentamos para dar "aire" arriba y que no choque con el techo
                   barTouchData: BarTouchData(
                     enabled: true,
                     touchTooltipData: BarTouchTooltipData(
@@ -61,6 +61,7 @@ class ExtractionTimeChart extends StatelessWidget {
                     bottomTitles: AxisTitles(
                       sideTitles: SideTitles(
                         showTitles: true,
+                        reservedSize: 32, // Espacio reservado para que no se corten las palabras de abajo
                         getTitlesWidget: (value, meta) {
                           const style = TextStyle(color: Colors.blueGrey, fontWeight: FontWeight.bold, fontSize: 14);
                           String text;
@@ -70,16 +71,17 @@ class ExtractionTimeChart extends StatelessWidget {
                             case 2: text = 'Volcán'; break;
                             default: text = ''; break;
                           }
-                          return SideTitleWidget(meta: meta, child: Text(text, style: style));
+                          return SideTitleWidget(meta: meta, space: 8.0, child: Text(text, style: style));
                         },
                       ),
                     ),
                     leftTitles: AxisTitles(
                       sideTitles: SideTitles(
                         showTitles: true,
-                        reservedSize: 40,
+                        reservedSize: 45, // Más espacio para los números del eje Y
+                        interval: 8,
                         getTitlesWidget: (value, meta) {
-                          if (value % 8 != 0 && value != 34) return const SizedBox.shrink();
+                          if (value == 36) return const SizedBox.shrink(); // Ocultar el del techo absoluto
                           return Text('${value.toInt()}h', style: const TextStyle(color: Colors.grey, fontSize: 12));
                         },
                       ),

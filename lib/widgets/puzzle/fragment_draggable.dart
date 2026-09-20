@@ -19,7 +19,7 @@ class FragmentDraggable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (isPlaced) {
-      return const SizedBox(width: 80, height: 80); // Ocultar si ya está ensamblado
+      return const SizedBox(width: 80, height: 80); // oculta el ensamble cuando está colocado
     }
 
     final fragmentWidget = Container(

@@ -7,6 +7,7 @@ import '../widgets/charts/wear_level_chart.dart';
 import '../widgets/charts/human_faction_chart.dart';
 import '../widgets/charts/damage_origin_chart.dart';
 import '../widgets/charts/guardians_radar_chart.dart';
+import '../widgets/history_dialog.dart';
 
 class PuzzlePage extends StatefulWidget {
   const PuzzlePage({super.key});
@@ -26,6 +27,22 @@ class _PuzzlePageState extends State<PuzzlePage> {
     });
   }
 
+  // Función para reiniciar el rompecabezas
+  void _resetPuzzle() {
+    setState(() {
+      _placedFragments.clear();
+    });
+  }
+
+  void _showHistory(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return const HistoryDialog();
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     bool isComplete = _placedFragments.length == 3;
@@ -34,6 +51,30 @@ class _PuzzlePageState extends State<PuzzlePage> {
       appBar: AppBar(
         title: const Text('Asmodeo: Hub de Mando'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: TextButton.icon(
+              onPressed: () => _showHistory(context),
+              icon: const Icon(Icons.auto_stories, color: Colors.white),
+              label: const Text(
+                'Historia de Asmodeo',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 0.5,
+                ),
+              ),
+              style: TextButton.styleFrom(
+                backgroundColor: const Color(0xFFc0392b), // Crimson
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -41,7 +82,7 @@ class _PuzzlePageState extends State<PuzzlePage> {
             // SECCIÓN DEL ROMPECABEZAS
             Container(
               padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
-              color: isComplete ? Colors.deepPurple.withOpacity(0.1) : null,
+              color: isComplete ? Colors.deepPurple.withValues(alpha: 0.1) : null,
               child: Column(
                 children: [
                   Text(
@@ -99,7 +140,21 @@ class _PuzzlePageState extends State<PuzzlePage> {
                         fontWeight: FontWeight.bold,
                         letterSpacing: 4,
                       ),
-                    )
+                    ),
+                    const SizedBox(height: 20),
+                    ElevatedButton.icon(
+                      onPressed: _resetPuzzle,
+                      icon: const Icon(Icons.refresh),
+                      label: const Text('Desensamblar y Reiniciar'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.purpleAccent,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                        textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                        elevation: 5,
+                        shadowColor: Colors.purpleAccent,
+                      ),
+                    ),
                   ]
                 ],
               ),

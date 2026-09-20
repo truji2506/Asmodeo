@@ -58,8 +58,8 @@ class _DamageOriginChartState extends State<DamageOriginChart> {
                         const Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text('Σ', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color: Colors.black87)),
-                            Text('daño total', style: TextStyle(color: Colors.grey, fontSize: 10)),
+                            Text('Σ', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 36, color: Colors.black87)),
+                            Text('daño total', style: TextStyle(color: Colors.grey, fontSize: 12)),
                           ],
                         ),
                         PieChart(
@@ -79,7 +79,7 @@ class _DamageOriginChartState extends State<DamageOriginChart> {
                             ),
                             borderData: FlBorderData(show: false),
                             sectionsSpace: 4,
-                            centerSpaceRadius: 35,
+                            centerSpaceRadius: 75,
                             sections: showingSections(),
                           ),
                         ),
@@ -114,7 +114,7 @@ class _DamageOriginChartState extends State<DamageOriginChart> {
   List<PieChartSectionData> showingSections() {
     return List.generate(3, (i) {
       final isTouched = i == touchedIndex;
-      final radius = isTouched ? 35.0 : 25.0;
+      final radius = isTouched ? 50.0 : 40.0;
       const textStyle = TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white);
 
       switch (i) {
