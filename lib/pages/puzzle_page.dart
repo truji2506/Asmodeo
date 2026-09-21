@@ -7,10 +7,12 @@ import '../widgets/charts/wear_level_chart.dart';
 import '../widgets/charts/human_faction_chart.dart';
 import '../widgets/charts/damage_origin_chart.dart';
 import '../widgets/charts/guardians_radar_chart.dart';
+import '../widgets/charts/population_map_chart.dart';
 import '../widgets/history_dialog.dart';
 
 class PuzzlePage extends StatefulWidget {
   const PuzzlePage({super.key});
+
 
   @override
   State<PuzzlePage> createState() => _PuzzlePageState();
@@ -18,6 +20,15 @@ class PuzzlePage extends StatefulWidget {
 
 class _PuzzlePageState extends State<PuzzlePage> {
   final List<String> _placedFragments = [];
+
+  @override
+  void initState() {
+    super.initState();
+    // Mostrar la historia automáticamente al cargar la aplicación web
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _showHistory(context);
+    });
+  }
 
   void _onFragmentAccepted(String id) {
     setState(() {
@@ -171,6 +182,15 @@ class _PuzzlePageState extends State<PuzzlePage> {
                     style: Theme.of(context).textTheme.headlineSmall,
                   ),
                   const SizedBox(height: 20),
+                  
+                  // Mapa Interactivo a lo ancho de toda la pantalla
+                  const SizedBox(
+                    height: 450,
+                    width: double.infinity,
+                    child: PopulationMapChart(),
+                  ),
+                  const SizedBox(height: 20),
+                  
                   // Grillas de gráficos (Empezamos con los primeros 2 de las imágenes)
                   GridView.count(
                     crossAxisCount: MediaQuery.of(context).size.width > 800 ? 2 : 1,

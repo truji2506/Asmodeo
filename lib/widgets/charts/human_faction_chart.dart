@@ -44,7 +44,7 @@ class HumanFactionChart extends StatelessWidget {
               child: BarChart(
                 BarChartData(
                   alignment: BarChartAlignment.spaceAround,
-                  maxY: 7,
+                  maxY: 8, // Subido a 8 para que la barra de 6.5k no golpee el techo
                   extraLinesData: ExtraLinesData(
                     horizontalLines: [
                       HorizontalLine(
@@ -78,6 +78,7 @@ class HumanFactionChart extends StatelessWidget {
                     bottomTitles: AxisTitles(
                       sideTitles: SideTitles(
                         showTitles: true,
+                        reservedSize: 36, // Espacio reservado para los textos "Norte", "Sur", etc.
                         getTitlesWidget: (value, meta) {
                           const style = TextStyle(color: Colors.blueGrey, fontWeight: FontWeight.bold, fontSize: 14);
                           String text;
@@ -88,7 +89,7 @@ class HumanFactionChart extends StatelessWidget {
                             case 3: text = 'Oeste'; break;
                             default: text = ''; break;
                           }
-                          return SideTitleWidget(meta: meta, child: Text(text, style: style));
+                          return SideTitleWidget(meta: meta, space: 8.0, child: Text(text, style: style));
                         },
                       ),
                     ),
@@ -96,9 +97,9 @@ class HumanFactionChart extends StatelessWidget {
                       sideTitles: SideTitles(
                         showTitles: true,
                         interval: 2,
-                        reservedSize: 30,
+                        reservedSize: 40, // Más espacio para los números del eje Y ("2k", "4k")
                         getTitlesWidget: (value, meta) {
-                          if (value == 7) return const SizedBox.shrink();
+                          if (value == 8) return const SizedBox.shrink(); // Ocultamos la etiqueta superior
                           return Text('${value.toInt()}k', style: const TextStyle(color: Colors.grey, fontSize: 12));
                         },
                       ),

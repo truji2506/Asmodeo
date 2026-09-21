@@ -60,20 +60,23 @@ class _GuardiansRadarChartState extends State<GuardiansRadarChart> {
                       RadarChartData(
                         radarShape: RadarShape.polygon,
                         tickCount: 5,
-                        ticksTextStyle: const TextStyle(color: Colors.transparent),
+                        // Restauramos los números del radar que te gustaban.
+                        // Gracias al ancla en 0 que pusimos antes, ahora los números serán exactos (20, 40, 60...)
+                        ticksTextStyle: const TextStyle(color: Colors.black26, fontSize: 10, fontWeight: FontWeight.bold),
                         gridBorderData: const BorderSide(color: Colors.black12, width: 2),
                         tickBorderData: const BorderSide(color: Colors.black12),
                         getTitle: (index, angle) {
                           switch (index) {
                             case 0: return const RadarChartTitle(text: 'Fuerza Bruta');
-                            case 1: return const RadarChartTitle(text: 'Magia / Alcance');
+                            case 1: return const RadarChartTitle(text: 'Magia /\nAlcance'); // Salto de línea para evitar choque
                             case 2: return const RadarChartTitle(text: 'Resistencia');
                             case 3: return const RadarChartTitle(text: 'Velocidad');
                             case 4: return const RadarChartTitle(text: 'Letalidad');
                             default: return const RadarChartTitle(text: '');
                           }
                         },
-                        titlePositionPercentageOffset: 0.2,
+                        // Acercamos un poco más los títulos al gráfico para que no choquen con la leyenda
+                        titlePositionPercentageOffset: 0.12,
                         titleTextStyle: const TextStyle(color: Colors.blueGrey, fontSize: 10, fontWeight: FontWeight.bold),
                         dataSets: [
                           // Tirano Porcino (Naranja)
@@ -81,7 +84,7 @@ class _GuardiansRadarChartState extends State<GuardiansRadarChart> {
                             RadarDataSet(
                               fillColor: const Color(0xFFD84315).withValues(alpha: 0.2),
                               borderColor: const Color(0xFFD84315),
-                              entryRadius: 3,
+                              entryRadius: 4, // Puntos más grandes
                               dataEntries: const [
                                 RadarEntry(value: 92),
                                 RadarEntry(value: 18),
@@ -95,7 +98,7 @@ class _GuardiansRadarChartState extends State<GuardiansRadarChart> {
                             RadarDataSet(
                               fillColor: const Color(0xFF6A1B9A).withValues(alpha: 0.2),
                               borderColor: const Color(0xFF6A1B9A),
-                              entryRadius: 3,
+                              entryRadius: 4, // Puntos más grandes
                               dataEntries: const [
                                 RadarEntry(value: 22),
                                 RadarEntry(value: 95),
@@ -109,7 +112,7 @@ class _GuardiansRadarChartState extends State<GuardiansRadarChart> {
                             RadarDataSet(
                               fillColor: const Color(0xFF00695C).withValues(alpha: 0.2),
                               borderColor: const Color(0xFF00695C),
-                              entryRadius: 3,
+                              entryRadius: 4, // Puntos más grandes
                               dataEntries: const [
                                 RadarEntry(value: 80),
                                 RadarEntry(value: 30),
@@ -118,27 +121,39 @@ class _GuardiansRadarChartState extends State<GuardiansRadarChart> {
                                 RadarEntry(value: 72),
                               ],
                             ),
-                          // Dataset fantasma: evita que fl_chart colapse si apagas todos los filtros
-                          if (!showTirano && !showHechicero && !showMinotauro)
-                            RadarDataSet(
-                              fillColor: Colors.transparent,
-                              borderColor: Colors.transparent,
-                              entryRadius: 0,
-                              dataEntries: const [
-                                RadarEntry(value: 0),
-                                RadarEntry(value: 0),
-                                RadarEntry(value: 0),
-                                RadarEntry(value: 0),
-                                RadarEntry(value: 0),
-                              ],
-                            ),
+                          // "Anchor Dataset" (Ancla estática al 100 y al 0)
+                          RadarDataSet(
+                            fillColor: Colors.transparent,
+                            borderColor: Colors.transparent,
+                            entryRadius: 0,
+                            dataEntries: const [
+                              RadarEntry(value: 100),
+                              RadarEntry(value: 100),
+                              RadarEntry(value: 100),
+                              RadarEntry(value: 100),
+                              RadarEntry(value: 100),
+                            ],
+                          ),
+                          RadarDataSet(
+                            fillColor: Colors.transparent,
+                            borderColor: Colors.transparent,
+                            entryRadius: 0,
+                            dataEntries: const [
+                              RadarEntry(value: 0),
+                              RadarEntry(value: 0),
+                              RadarEntry(value: 0),
+                              RadarEntry(value: 0),
+                              RadarEntry(value: 0),
+                            ],
+                          ),
                         ],
                       ),
                     ),
                   ),
-                  const SizedBox(width: 10),
+                  // Aumentamos la separación entre el radar y las leyendas
+                  const SizedBox(width: 30),
                   
-                  // Leyenda Interactiva
+                  // Leyenda Interactiva con Valores Exactos
                   Expanded(
                     flex: 2,
                     child: SingleChildScrollView(
@@ -151,20 +166,25 @@ class _GuardiansRadarChartState extends State<GuardiansRadarChart> {
                             isActive: showTirano,
                             onTap: () => setState(() => showTirano = !showTirano),
                           ),
-                          const SizedBox(height: 10),
+                          if (showTirano) _buildMetricsRow(const [92, 18, 78, 40, 85]),
+                          const SizedBox(height: 12),
+                          
                           _buildInteractiveLegend(
                             name: 'Hechicero',
                             color: const Color(0xFF6A1B9A),
                             isActive: showHechicero,
                             onTap: () => setState(() => showHechicero = !showHechicero),
                           ),
-                          const SizedBox(height: 10),
+                          if (showHechicero) _buildMetricsRow(const [22, 95, 35, 60, 88]),
+                          const SizedBox(height: 12),
+                          
                           _buildInteractiveLegend(
                             name: 'Minotauros',
                             color: const Color(0xFF00695C),
                             isActive: showMinotauro,
                             onTap: () => setState(() => showMinotauro = !showMinotauro),
                           ),
+                          if (showMinotauro) _buildMetricsRow(const [80, 30, 95, 55, 72]),
                         ],
                       ),
                     ),
@@ -174,6 +194,39 @@ class _GuardiansRadarChartState extends State<GuardiansRadarChart> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  // Row de métricas exactas (UI/UX enhancement)
+  Widget _buildMetricsRow(List<int> values) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 26.0, top: 4.0),
+      child: Wrap(
+        spacing: 6,
+        runSpacing: 6,
+        children: [
+          _metricBadge('FZA', values[0]),
+          _metricBadge('MAG', values[1]),
+          _metricBadge('RES', values[2]),
+          _metricBadge('VEL', values[3]),
+          _metricBadge('LET', values[4]),
+        ],
+      ),
+    );
+  }
+
+  Widget _metricBadge(String label, int val) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
+      decoration: BoxDecoration(
+        color: Colors.blueGrey.withValues(alpha: 0.05),
+        borderRadius: BorderRadius.circular(4),
+        border: Border.all(color: Colors.blueGrey.withValues(alpha: 0.15)),
+      ),
+      child: Text(
+        '$label: $val',
+        style: const TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Colors.blueGrey),
       ),
     );
   }
