@@ -115,6 +115,7 @@ class _TacticalResourcesChartState extends State<TacticalResourcesChart> {
     return List.generate(3, (i) {
       final isTouched = i == touchedIndex;
       final fontSize = isTouched ? 16.0 : 0.0;
+      
       final radius = isTouched ? 50.0 : 40.0;
       const textStyle = TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white);
 

@@ -1,30 +1,28 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:asmodeo/app/state.dart';
 
-import 'package:asmodeo/main.dart';
-
+// Pruebas de la lógica de la experiencia (sin Firebase ni fuentes de red).
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const AsmodeoApp());
+  test('la tuerca recorre todo el viaje y se forja en cada punto', () {
+    final s = AsmodeoState();
+    s.irEtapa(4);
+    expect(s.etapa, 4);
+    s.irEtapa(1);
+    s.forjar(); // Esmeralda en las Llanuras
+    expect(s.recolectados, {'esmeralda'});
+  });
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+  test('la fragua solo enciende con los tres fragmentos', () {
+    final s = AsmodeoState();
+    s.meterEnFragua('esmeralda');
+    s.meterEnFragua('carmesi');
+    s.encender();
+    expect(s.completo, isFalse);
+    s.meterEnFragua('turquesa');
+    s.encender();
+    expect(s.completo, isTrue);
+    s.reiniciar();
+    expect(s.completo, isFalse);
+    expect(s.pantalla, Pantalla.mesa);
   });
 }
